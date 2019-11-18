@@ -42,10 +42,10 @@ class SeekingservicePipeline(object):
                 "Duplicate item found: %s because no cellphone" % item)
         else:
             try:
-                self.cur.execute("insert into seekingservice(company_name, owner, cellphone, address) values(%s,%s,%s,%s)",
-                                 (item['company_name'], item['owner'], item['cellphone'], item['address']))
+                self.cur.execute("insert into seekingservice(company_name, owner, cellphone, address, category) values(%s,%s,%s,%s,%s)",
+                                 (item['company_name'], item['owner'], item['cellphone'], item['address'], item['category']))
                 self.connection.commit()
-            except:
-                print("Error: rolllllllllllback")
+            except Exception as ex:
+                print("Error: rolllllllllllback  " + str(ex))
                 self.cur.execute("rollback")
             return item

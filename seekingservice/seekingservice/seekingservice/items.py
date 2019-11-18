@@ -14,3 +14,4 @@ class SeekingserviceItem(scrapy.Item):
     owner = scrapy.Field()
     cellphone = scrapy.Field()
     address = scrapy.Field()
+    category = scrapy.Field()
