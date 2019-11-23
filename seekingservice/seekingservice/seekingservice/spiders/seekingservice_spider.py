@@ -59,7 +59,7 @@ class SeekingserviceSpiderSpider(RedisCrawlSpider):
         'Timber Flooring': ('timber-flooring'),
         'Wardrobes': ('walk-in-wardrobe', 'built-in-wardrobes'),
         'Waterproofing': ('waterproofing', 'bathroom-waterproofing')}
-    cat_dict = {'Timber Flooring': ('timber-flooring'),}
+
     def start_requests(self):
         cat_dict = self.cat_dict
         for cag in cat_dict:
@@ -69,11 +69,11 @@ class SeekingserviceSpiderSpider(RedisCrawlSpider):
             if type(cat_dict[cag]) is str:
                 url = self.seekservice_urls + "/" + cat_dict[cag] + "/nsw/"
                 # print(url)
-                yield Request(url=url, callback=self.parse_area)
+                yield Request(url=url, callback=self.parse_area, meta={'cate': cag})
             else:
                 for subcat in cat_dict[cag]:
                     url = self.seekservice_urls + "/" + subcat + "/nsw/"
-                    yield Request(url=url, callback=self.parse_area)
+                    yield Request(url=url, callback=self.parse_area, meta={'cate': cag})
                     # print(url)
 
     def parse_area(self, response):
@@ -83,7 +83,7 @@ class SeekingserviceSpiderSpider(RedisCrawlSpider):
             'a::attr(href)').getall()
         for area in areas:
             area_url = self.seekservice_urls + area
-            yield Request(url=area_url, callback=self.parse_urleverypage, meta={'area_url': area_url})
+            yield Request(url=area_url, callback=self.parse_urleverypage, meta={'area_url': area_url, 'cate': response.meta['cate']})
 
     def parse_urleverypage(self, response):
         nums = response.xpath(
@@ -99,7 +99,7 @@ class SeekingserviceSpiderSpider(RedisCrawlSpider):
         for i in range(1, pages):
             page_url = response.meta['area_url'] + "?page=" + str(i)
             # print(page_url)
-            yield Request(url=page_url, callback=self.parse_basicinfo)
+            yield Request(url=page_url, callback=self.parse_basicinfo, meta={'cate': response.meta['cate']})
 
     def parse_basicinfo(self, response):
         for mbm in response.css('[class=mbd-card]'):
@@ -124,7 +124,7 @@ class SeekingserviceSpiderSpider(RedisCrawlSpider):
             suburl = self.seekservice_urls + url
             # print(suburl)
 
-            yield Request(url=suburl, callback=self.parse_moreinfo, meta={'cellphone': cellphone})
+            yield Request(url=suburl, callback=self.parse_moreinfo, meta={'cellphone': cellphone, 'cate': response.meta['cate']})
 
     def parse_moreinfo(self, response):
         item = SeekingserviceItem()
@@ -158,7 +158,7 @@ class SeekingserviceSpiderSpider(RedisCrawlSpider):
         item['owner'] = owner
         item['cellphone'] = cellphone
         item['address'] = address
-        item['category'] = self.category
+        item['category'] = response.meta['cate']
 
         # print(item['company_name'])
         # print(item['owner'])
