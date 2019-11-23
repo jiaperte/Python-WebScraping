@@ -24,9 +24,9 @@ class DuplicatesPipeline(object):
 
 class SeekingservicePipeline(object):
     def open_spider(self, spider):
-        hostname = 'localhost'
+        hostname = '3.106.116.122'
         username = 'postgres'
-        password = ''  # your password
+        password = '123456'  # your password
         database = 'seekingservice'
         self.connection = psycopg2.connect(
             host=hostname, user=username, password=password, dbname=database)

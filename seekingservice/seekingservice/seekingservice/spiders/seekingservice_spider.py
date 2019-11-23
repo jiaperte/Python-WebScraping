@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-import scrapy
+#import scrapy
+from scrapy_redis.spiders import RedisCrawlSpider
 from scrapy.http.request import Request
 from seekingservice.items import SeekingserviceItem
 import json
 
 
-class SeekingserviceSpiderSpider(scrapy.Spider):
+class SeekingserviceSpiderSpider(RedisCrawlSpider):
     name = 'seekingservice_spider'
     allowed_domains = ['serviceseeking.com.au']
     seekservice_urls = 'http://serviceseeking.com.au'
