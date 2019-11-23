@@ -10,7 +10,7 @@ class SeekingserviceSpiderSpider(RedisCrawlSpider):
     name = 'seekingservice_spider'
     allowed_domains = ['serviceseeking.com.au']
     seekservice_urls = 'http://serviceseeking.com.au'
-    start_urls = seekservice_urls + '/builders/nsw/'
+    #start_urls = seekservice_urls + '/builders/nsw/'
     category = ""
 
     cat_dict = {
@@ -59,7 +59,7 @@ class SeekingserviceSpiderSpider(RedisCrawlSpider):
         'Timber Flooring': ('timber-flooring'),
         'Wardrobes': ('walk-in-wardrobe', 'built-in-wardrobes'),
         'Waterproofing': ('waterproofing', 'bathroom-waterproofing')}
-
+    cat_dict = {'Timber Flooring': ('timber-flooring'),}
     def start_requests(self):
         cat_dict = self.cat_dict
         for cag in cat_dict:

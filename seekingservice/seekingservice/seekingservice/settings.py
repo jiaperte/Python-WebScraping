@@ -16,9 +16,10 @@ NEWSPIDER_MODULE = 'seekingservice.spiders'
 
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
-REDIS_HOST = '3.106.116.122'
-REDIS_PORT = 6379
-REDIS_PASSWORD = 'redis124'
+#REDIS_HOST = '3.106.116.122'
+#REDIS_PORT = 6379
+#REDIS_PASSWORD = 'redis124'
+REDIS_URL = 'redis://:redis124@3.106.116.122:6379'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'seekingservice (+http://www.yourdomain.com)'
 
